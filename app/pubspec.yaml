@@ -6,6 +6,8 @@ version: 1.0.0+1
 
 environment:
   sdk: ^3.13.7
+  # Exact version CI installs; pub treats it as a minimum locally
+  flutter: 3.47.9
 
 dependencies:
   flutter:

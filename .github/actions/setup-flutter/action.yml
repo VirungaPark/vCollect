@@ -1,0 +1,29 @@
+name: Set up Flutter
+description: Installs the Flutter version pinned in pubspec.yaml and fetches packages.
+
+inputs:
+  working-directory:
+    description: Path to the Flutter project.
+    default: app
+  java:
+    description: Install a JDK; only Android builds need one.
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - if: inputs.java == 'true'
+      uses: actions/setup-java@v6
+      with:
+        distribution: temurin
+        java-version: '17'
+        cache: gradle
+
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version-file: ${{ inputs.working-directory }}/pubspec.yaml
+        cache: true
+
+    - shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      run: flutter pub get
