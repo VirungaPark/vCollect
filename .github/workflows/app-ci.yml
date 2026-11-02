@@ -47,6 +47,24 @@ jobs:
       - uses: ./.github/actions/setup-flutter
       - run: flutter test
 
+  licenses:
+    name: Dependency licenses
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      VERY_GOOD_CLI_VERSION: 1.5.0
+      # Permissive only, so the repo can go public under MIT
+      ALLOWED_LICENSES: MIT,BSD-2-Clause,BSD-3-Clause,Apache-2.0,ISC,Zlib
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup-flutter
+      - run: dart pub global activate very_good_cli "$VERY_GOOD_CLI_VERSION"
+      # Transitive packages ship in the APK too, so check them as well
+      - run: >-
+          dart pub global run very_good_cli:very_good packages check licenses
+          --dependency-type direct-main,transitive
+          --allowed "$ALLOWED_LICENSES"
+
   build-apk:
     name: Debug APK
     needs: [analyze, test]
