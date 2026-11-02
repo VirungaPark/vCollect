@@ -1,0 +1,3 @@
+# Per-developer IDE files; app/.gitignore only covers app/
+.idea/
+*.iml
