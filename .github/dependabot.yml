@@ -1,0 +1,21 @@
+version: 2
+
+updates:
+  - package-ecosystem: pub
+    directory: /app
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    # One PR for routine bumps; majors stay separate for review
+    groups:
+      pub-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    # "/" only covers workflows, so list composite actions too
+    directories:
+      - /
+      - /.github/actions/*
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
