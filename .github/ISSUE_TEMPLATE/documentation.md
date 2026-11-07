@@ -1,18 +1,9 @@
 ---
-name: Documentation
-about: Create documentation for this project
-title: "[DOCUMENTATION]"
-labels: ''
-assignees: ''
-
----
-
-Name: Documentation
-About: A diagram, spec, or guide that is the deliverable itself
-Title: "[Docs] "
-Labels: documentation
-Assignees: ""
-
+name: Documentation  
+about: A diagram, spec, or guide that is the deliverable itself  
+title: "[Docs]"  
+labels: documentation  
+assignees: ""
 ---
 
 ## Description

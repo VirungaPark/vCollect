@@ -1,18 +1,9 @@
 ---
-name: Bug
-about: Steps to reproduce, expected vs. actual, environment information for bugs.
-title: "[BUG]"
-labels: ''
-assignees: ''
-
----
-
-Name: Bug report
-About: Something is broken or not working as designed
-Title: "[Bug] "
-Labels: bug
-Assignees: ""
-
+name: Bug  
+about: Something is broken or not working as designed  
+title: "[Bug]"  
+labels: bug  
+assignees: ""
 ---
 
 ## Description

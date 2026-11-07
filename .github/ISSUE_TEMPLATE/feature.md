@@ -1,18 +1,9 @@
 ---
-name: Feature
-about: Suggest a Feature
-title: "[FEATURE]"
-labels: ''
+name: Feature  
+about: Suggest a Feature  
+title: "[FEATURE]"  
+labels: ''  
 assignees: ''
-
----
-
-Name: Feature
-About: A new screen, capability, or investigation
-Title: "[Feature] "
-Labels: feature
-Assignees: ""
-
 ---
 
 ## Description
