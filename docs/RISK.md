@@ -189,9 +189,9 @@ Dart\_JTS is the port of the Java Topology Suite library that the team proposed 
 
 A quick overview of which risks are closed and when.
 
-| ID | Name | Synopsis | Date Closed |
-| :---- | :---- | :---- | :---- |
-| R-10 | Our docs are behind our code | [docs/desing.md](https://github.com/VirungaPark/vCollect/tree/main/docs) and [docs/README.md](https://github.com/VirungaPark/vCollect/tree/main/docs) are blank. | Documentation was completed 11/1/26. |
+| ID   | Name                                 | Synopsis                                                                                                                                                                                           | Date Closed                                                                                                                                                              |
+|:-----|:-------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| R-10 | Our docs are behind our code         | [docs/desing.md](https://github.com/VirungaPark/vCollect/tree/main/docs) and [docs/README.md](https://github.com/VirungaPark/vCollect/tree/main/docs) are blank.                                   | Documentation was completed 11/1/26.                                                                                                                                     |
 | R-12 | Nothing enforces review or tests yet | Repository set to private, restricting GitHub Action usage, only the project partner or TA could edit repository settings, the team lacked admin roles. No basic CI implemented. No project board. | 11/4/26 repository made public, branch protection enabled, and project board created (team still needs invites). 11/6/26 CI added to the repository and team made admin. |
 
 &nbsp;
