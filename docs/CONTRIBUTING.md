@@ -47,11 +47,28 @@ Branch protection on `main` is a strict rule. The Quality Owner configures it an
 ## Issues & Planning
 
 - Every piece of work has an issue on the GitHub Project board before a branch is opened. Board link: \[add the board link here\].
-- File issues using the templates in `.github/ISSUE_TEMPLATE/` (Bug, Feature, Documentation): problem or goal, acceptance criteria, and any partner spec reference.
-- Labels: `feature`, `bug`, `documentation`, with a size label `S`, `M`, `L`.
-- Size: `S` is under half a day, `M` is up to two days, and `L` must be split before the sprint starts.
+- File issues from the repository's **Issues** tab: choose **New issue**, then pick the matching template from `.github/ISSUE_TEMPLATE/` (see Issue templates below). Put any partner spec reference under Additional context.
+- Labels: each issue has one type label (`bug`, `enhancement`, or `documentation`) and one size label (`size: S`, `size: M`, or `size: L`). The Bug and Documentation templates apply their type label automatically. The Feature template applies no label, so add `enhancement` by hand. No template applies a size label, so add one by hand.
+- Size: `size: S` is under half a day, `size: M` is up to two days, and `size: L` must be split before the sprint starts.
 - The Project Manager triages new issues at each Friday meeting and assigns them. Anyone may pick up an unassigned issue after saying so in Teams.
 - Questions the specification document can't answer need to be communicated to the project partner at the Monday meeting, or through Email.
+
+### Issue templates
+
+| Template | Use it when | Required sections | Label applied |
+| :---- | :---- | :---- | :---- |
+| [Bug](../.github/ISSUE_TEMPLATE/bug.md) | Something is broken or not working as designed. | Description, Steps to reproduce, Expected vs. actual behavior, Environment, Acceptance criteria | `bug` |
+| [Feature](../.github/ISSUE_TEMPLATE/feature.md) | You are proposing something to build or investigate. | Description, Acceptance criteria | None; add `enhancement` by hand |
+| [Documentation](../.github/ISSUE_TEMPLATE/documentation.md) | A diagram, spec, or guide is the deliverable itself. Docs that accompany a code change belong in that change's Bug or Feature issue. | Description, Location and format, Acceptance criteria | `documentation` |
+
+Proposed solution and Additional context are optional. GitHub does not enforce any of these sections, so triagers and reviewers check each issue against the list below.
+
+**A complete issue has:**
+
+- A title that keeps the template's prefix (`[Bug]`, `[FEATURE]`, or `[Docs]`) and says what the work is.
+- Every required section filled in, following the template's prompts.
+- Acceptance criteria that are specific to the issue and can be checked. Edit or replace the template's starter checkboxes to fit.
+- Its type label and one size label.
 
 ## Commit Messages
 
