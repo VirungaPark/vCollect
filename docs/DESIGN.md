@@ -404,22 +404,3 @@ Major architectural decisions should be recorded in separate Architecture Decisi
 - **Repository Checkpoints Assignment:** Documentation and deployment-target requirements.
 
 This document is a living architecture reference. It should be updated as implementation details are validated, interfaces are finalized, and architectural decisions are made.
-
-&nbsp;
-
----
-gdoc_comments:
-  c1:
-    status: RESOLVED
-    token: AX5pRSljzGaC4Wp9SkKNUvj5keh1PvdE7poUs4l7wczJKfjp39iS7Qf43-BxYuAddubnUrdnn5e5dQ0gViZe2-EnIm2EIXmzQQuLZH0VwB6UcUZvy4gwKTy7LmqaUXc43exal__vY3YQMLGeWaIUucHoFua95FTNBlD_wiIVAeNjux5xV6uujYgtDMHcsX14ihFYBLX8cKHQKhGQ1ctpw9MQUjzLf6URD6EcxaezzRN_UMVqx3kWAOmOMGxF7i-rugwPwH2jjtwxPbNdEQJNHbuOR_s8bxu3fuvsDNvCTDWwmmqbAlKnBlhNZtpxhldrXieQkL1rgyTQe8wjk57EVBC6YslSyL6JMYgbCb8j30Qep5YMjAzA6oUX8yZumVrQrfNlU-9H-9FFznWEXsG4zm9tr7EIevr0NX2yjH-C42X_wjNqJExR5qeTVoIDySXyiUipa_phokp7TuGUl3zLOrG91mD9NbXul8U3dj7VuXCdoJfCI_F5P5L3H4Z6BFm6BixBJsYPwNMwgaBBkFOkeqX1ISgh1g
-    head:
-      author: Sophia Scherer
-      time: '2026-11-02T04:48:21.980Z'
-      body: I kind of combined the spec document they gave us at the start with our
-        tech proposal. Let me know if you&#39;d like to see any changes :)
-      quote: esign
-    replies:
-    - author: Sophia Scherer
-      time: '2026-11-02T06:07:00.937Z'
-      action: RESOLVE
----
