@@ -1,4 +1,6 @@
-# <!-- gdoc_comment_begin: c1 -->Requirements<!-- gdoc_comment_end: c1 -->
+# Requirements
+
+Last updated: 2026-11-08. Sources: Virunga's target design (October 8, 2026), the Flutter tech stack proposal, and Virunga's answers of 2026-10-23. Where the target design and the tech stack proposal differ, the tech stack proposal wins. Requirements marked **assumed** have not been confirmed by Virunga.
 
 ## Problem Statement
 
@@ -8,11 +10,11 @@ Virunga Park needs an app that lets field agents record thousands of farmers, th
 
 Priority labels below use MoSCoW: need to the product, not build order.
 
-| <!-- gdoc_comment_begin: c2 -->ID<!-- gdoc_comment_end: c2 --> (FR-\#) | Priority | Statement | Acceptance Criteria |
+| ID (FR-\#) | Priority | Statement | Acceptance Criteria |
 | :---- | :---- | :---- | :---- |
-| FR-1 | Must: app data must be secure. | A user opens the app and signs in using their Virunga ID and passcode. | An unregistered ID or incorrect passcode is denied. |
+| FR-1 | Must: app data must be secure. **Assumed:** the sign-in method is not confirmed by Virunga.&nbsp; | A user opens the app and signs in using their Virunga ID and passcode. | An unregistered ID or incorrect passcode is denied. |
 | FR-2 | Must: main workflow, nothing else works without it. | An agent opens and fills out a new form with date, time, location, and farmers information. | The data in the form is saved locally. Form is queued for sync. |
-| FR-3 | Must: data needs to persist between sessions, otherwise it needs to be collected again. | An agent opens an existing form and completes the remaining steps. | Data from the agent's previous session persists. Incomplete forms are not sent to the backend. |
+| FR-3 | Must: data needs to persist between sessions, otherwise it needs to be collected again. | An agent opens an existing form and completes the remaining steps.&nbsp; | Data from the agent's previous session persists. Incomplete forms are not sent to the backend. If the phone switches off during a field walk, the walk resumes at the last flag. |
 | FR-4 | Must: core feature, app is useless without the cloud. | An agent connects to WiFi: app syncs with the database. | Completed forms are pushed to the database. Modified forms and assignments are pulled to the app. No data is lost during sync. |
 | FR-5 | Must: farmers can have multiple fields. | The agent can add one or more fields per farmer, each with its own crops, boundary walk, access path, trees or counts, and one screen per section (environment, inputs, condition, management, ownership, certification).&nbsp; | Two fields can be added to one farmer, each with its own crops, boundary and section screens, and both show on the farmer's file. |
 | FR-6 | Must: core feature, app couldn’t render forms, identity files, or maps without this function. | On sync, the phone receives the campaign package: published forms, people and fields already known in the agent's zones, the offline map and a block of Virunga IDs.&nbsp; | After one sync on Wi-Fi, in airplane mode the agent can open a known person, open a form, view the map and create a new record with an ID.&nbsp; |
@@ -50,7 +52,7 @@ Priority labels below use MoSCoW: need to the product, not build order.
 | FR-16 | Should: helpful but not required as long as cloud sync exists. | Data can be exported in GeoPackage or GeoJSON for the GIS team. | An export file opens in GIS software with the expected shapes. |
 | FR-17 | Must: prevent data loss. | Data is removed from the phone only after the cloud confirms it has it.&nbsp; | A record is retained on the phone until approval. |
 
-## Non-functional requirements
+Non-functional requirements
 
 | ID (NFR-\#) | Priority | Statement |
 | :---- | :---- | :---- |
@@ -72,36 +74,42 @@ Constraints
 | C-4 | Signatures are signed on the screen through the app; tied to the data it confirms. |
 | C-5 | Cloud is AWS: a PostgreSQL database with PostGIS holds the reference data. |
 | C-6 | Remains lightweight, used by devices with little storage. |
-| C-7 | Needs to be compatible with both Android and iOS devices. |
+| C-7 | The app is built so its Flutter code stays compatible with iOS. Android is the delivery target and the only build that is tested.&nbsp; |
 | C-8 | Needs to be compatible with external GPS receivers that send NMEA. |
 | C-9 | The app is built with Flutter. |
 | C-10 | Positions are stored in WGS 84 with at least 6 decimal places |
 | C-11 | The team works with synthetic data only, never real farmer data. Anything else Virunga shares is covered by the NDA. |
+| C-12 | Every dependency, including transitive ones, must use one of these licenses: MIT, BSD-2-Clause, BSD-3-Clause, Apache-2.0, ISC or Zlib. CI enforces this. |
 
 ## Success metrics
 
 Targets are proposals; Virunga and the team will set final numbers after the first field tests
 
-* Record lost during sync: 0\. Counted over the automated sync tests, including 50 records created in airplane mode, then synced, and a sync cut off mid-way. Every record must arrive exactly once, any loss is a failure.  
-* Unaided registration: at least 4 of 5 test agents, after a short training, complete one farmer and one field offline without help. Observed in usability tests, with time per registration and number of mistakes recorded and compared with iCollect (if possible) as a baseline.  
+* Record lost during sync: 0\. Counted over the automated sync tests, including 50 records created in airplane mode, then synced, and a sync cut off mid-way. Every record must arrive exactly once, any loss is a failure.
+* Unaided registration: at least 4 of 5 test agents, after a short training, complete one farmer and one field offline without help. Observed in usability tests, with time per registration and number of mistakes recorded and compared with iCollect (if possible) as a baseline.
 * Form change without a developer: a new question is added and published by an administrator and appears on a phone after its next sync, with 0 code changes and 0 new app releases. Demonstrated once per form change tested.
 
 ## Non-goals
 
-* Importing the data already held in iCollect.  
-* Links to other Virunga systems. The design must not block them later: records can be imported in bulk and the API is documented in OpenAPI  
-* Forest cover and deforestation analysis, which Virunga’s GIS team handles separately.  
+* Importing the data already held in iCollect.
+* Links to other Virunga systems. The design must not block them later: records can be imported in bulk and the API is documented in OpenAPI
+* Forest cover and deforestation analysis, which Virunga’s GIS team handles separately.
 * Face or fingerprint recognition.
+* An iOS build delivered and tested by the team (Virunga's target design puts an iPhone app out of scope; see Open questions).
 
 ## Open questions
 
-* Who validates records, the supervisor or the traceability manager? Owner: Valentin Pierson, before validation workflow is built.  
-* Is an overlap with another field blocked or kept with a note for the supervisor to decide? Owner: Valentin, before FR-8 is built.  
-* Where do administrators and traceability managers configure forms and campaigns: in the mobile app, or in a web back-office (listed as a stretch goal in the design document)? Owner: team with Valentin, before the first form is built  
-* Which form schema format do we use for versioned JSON forms? Owner: team, before form development begins  
-* Does the capstone deliver and test an iOS build, or only keep the Flutter code iOS-compatible? Owner: Valentin, before Repo Checkpoint 2  
-* Which tree species are inventoried and which are counted, and are trees in scope for the capstone project at all? Owner: Valentin, before FR-5 Is scheduled  
-* <!-- gdoc_comment_begin: c3 -->What are the Virunga ID format and issuing rules?<!-- gdoc_comment_end: c3 --> A placeholder format is used until decided. Owner: Valentin, before FR-17 is finished.  
-  * Example format, to be decided. V-4827-1936-5. The first eight digits come from the phone's block. The final 5 is the check digit. (section 6.1 of spec document)  
-* What AWS database endpoints can we connect to or what environment can we access? Owner: Valentin, before the walking skeleton is deployed (Repo Checkpoint 2\)  
+* Who validates records, the supervisor or the traceability manager? Owner: Valentin Pierson, before validation workflow is built.
+* Is an overlap with another field blocked or kept with a note for the supervisor to decide? Owner: Valentin, before FR-8 is built.
+* Where do administrators and traceability managers configure forms and campaigns: in the mobile app, or in a web back-office (listed as a stretch goal in the design document)? Owner: team with Valentin, before the first form is built
+* Which form schema format do we use for versioned JSON forms? Owner: team, before form development begins
+* Does the capstone deliver and test an iOS build, or only keep the Flutter code iOS-compatible? Owner: Valentin, before Repo Checkpoint 2
+* Which tree species are inventoried and which are counted, and are trees in scope for the capstone project at all? Owner: Valentin, before FR-5 Is scheduled
+* What are the Virunga ID format and issuing rules? A placeholder format is used until decided. Owner: Valentin, before FR-17 is finished.
+  * Example format, to be decided. V-4827-1936-5. The first eight digits come from the phone's block. The final 5 is the check digit. (section 6.1 of spec document)
+* What AWS database endpoints can we connect to or what environment can we access? Owner: Valentin, before the walking skeleton is deployed (Repo Checkpoint 2\)
 * What is the license and distribution plan (design document proposes MIT and an APK)? Owner: Valentin and team, to be agreed upon before the first release.
+
+&nbsp;
+
+&nbsp;

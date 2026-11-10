@@ -1,7 +1,7 @@
 # Technical Design
 
 > **Status:** Initial design – living document  
-> **Last updated:** November 1, 2026  
+> **Last updated:** November 8, 2026  
 > **Project:** Offline Field Data Collection App for Agricultural Traceability  
 > **Partner:** Virunga Foundation
 
@@ -13,12 +13,14 @@ The application must function in areas with unreliable or unavailable internet c
 
 The system follows an offline-first client-server architecture:
 
-- **Mobile application:** Provides data collection, geographic tools, local validation, and offline persistence.  
-- **Backend API:** Handles synchronization, server-side validation, and communication with centralized storage.  
-- **Database:** Stores structured records and geographic information.  
+- **Mobile application:** Provides data collection, geographic tools, local validation, and offline persistence.
+- **Backend API:** Handles synchronization, server-side validation, and communication with centralized storage.
+- **Database:** Stores structured records and geographic information.
 - **Object storage:** Stores photographs and other file attachments.
 
 Flutter is the confirmed mobile framework. The supporting technologies in this document reflect the team's current planned stack. Some integrations and infrastructure decisions remain subject to validation.
+
+**Backend ownership assumption.** Virunga has not yet provided an API specification, and it may not have an existing backend for data synchronization. Until that is confirmed, this design assumes the team builds the synchronization API described in section 4 (Python/FastAPI) and hosts it on AWS. The mobile application reaches the backend through a single interface, so a mock, the team's API, or an API supplied by Virunga can be substituted without reworking the application. The exact contract is tracked in issues \#17 and \#18.
 
 This document describes the intended architecture, major component responsibilities, and interfaces. It should be updated as implementation decisions are finalized.
 
@@ -30,12 +32,12 @@ The primary users are Virunga field agents and agronomists collecting agricultur
 
 The system interacts with the following actors and external components:
 
-- **Field agents:** Register farmers and related information, collect geographic data, and synchronize records.  
-- **Virunga supervisors:** May review and manage collected information through a future back-office application.  
-- **Backend API:** Receives, validates, and returns application data.  
-- **PostgreSQL/PostGIS:** Stores structured records and geographic information.  
-- **Object storage:** Stores photographs and other attachments.  
-- **GPS hardware:** Provides location information through the device or a supported external receiver.  
+- **Field agents:** Register farmers and related information, collect geographic data, and synchronize records.
+- **Virunga supervisors and administrators:** May review records, create campaigns and configure forms through a future back-office application (a stretch goal). Until it exists, campaigns and forms are prepared by other means (see section 3.5 and section 6).
+- **Backend API:** Receives, validates, and returns application data.
+- **PostgreSQL/PostGIS:** Stores structured records and geographic information.
+- **Object storage:** Stores photographs and other attachments.
+- **GPS hardware:** Provides location information through the device or a supported external receiver.
 - **Offline map data:** Provides geographic context when network access is unavailable.
 
 ### 2.2 Context diagram
@@ -118,11 +120,11 @@ This diagram represents the intended architecture, not completed implementation.
 
 The mobile application will be developed using Flutter and Dart. Its responsibilities include:
 
-- Providing guided data-entry workflows.  
-- Persisting records and attachments locally.  
-- Collecting and displaying geographic information.  
-- Performing local form and geometry validation.  
-- Tracking pending synchronization operations.  
+- Providing guided data-entry workflows.
+- Persisting records and attachments locally.
+- Collecting and displaying geographic information.
+- Performing local form and geometry validation.
+- Tracking pending synchronization operations.
 - Retaining local data until successful backend confirmation.
 
 The application should separate presentation, application logic, domain rules, and data access. This will help keep business rules independent of the user interface and make individual components easier to test.
@@ -137,15 +139,17 @@ The application will use WKB for local geometry storage and convert geometry to 
 
 The planned mapping and location stack includes:
 
-- `flutter_map` for map rendering.  
-- MBTiles for offline map data.  
-- Geolocator for device location.  
-- NMEA-compatible external GPS receiver integration, subject to implementation and hardware validation.  
-- A Dart JTS port for geometric operations and shape validation.
+- `flutter_map` for map rendering.
+- MBTiles for offline map data.
+- Geolocator for device location.
+- NMEA-compatible external GPS receiver integration, subject to implementation and hardware validation.
+- `dart_jts`, a Dart port of the Java Topology Suite, for geometric operations and shape validation. It is an ongoing port, so it may be incomplete and has not been vetted for our use. A spike (issue \#12) must confirm that it supports polygon closure, self-intersection and overlap checks before the application depends on it.
 
 The application should support guided field-boundary collection, access-path collection, and local checks for invalid geometry. Required checks include polygon closure, self-intersection, and applicable overlap checks.
 
 Area calculations must account for geographic coordinates rather than treating latitude and longitude as ordinary planar coordinates.
+
+**Location during field work.** Active tracking during a boundary walk uses Geolocator in the foreground and must keep running while the screen is dimmed or off. Background work is limited to synchronization (Workmanager). Battery use during tracking is a tracked requirement (NFR-5) and must be measured on a physical phone.
 
 **Backend**
 
@@ -169,7 +173,7 @@ Flutter is the confirmed mobile framework. The remaining technologies represent 
 | Database encryption | SQLite3 Multiple Ciphers | Local database encryption |
 | Key storage | `flutter_secure_storage` | Secure storage of encryption keys |
 | File encryption | `cryptography` | Attachment encryption |
-| Geometry operations | Dart JTS port | Shape validation and geometric operations |
+| Geometry operations | `dart_jts` | Shape validation and geometric operations |
 | Map rendering | `flutter_map` | Map visualization |
 | Offline maps | MBTiles | Local map tile storage |
 | Device location | Geolocator | Device GPS access |
@@ -189,11 +193,11 @@ The application must support relationships between people, farmers, households, 
 
 The target data design identifies several record types:
 
-- **Person:** Individual identity and personal information.  
-- **Farmer:** Agricultural information associated with a person.  
-- **Household member:** Information about members of a farmer's household.  
-- **Field:** Ownership, agricultural information, boundary geometry, and access path.  
-- **Tree / Tree count:** Optional agricultural inventory information.  
+- **Person:** Individual identity and personal information.
+- **Farmer:** Agricultural information associated with a person.
+- **Household member:** Information about members of a farmer's household.
+- **Field:** Ownership, agricultural information, boundary geometry, and access path.
+- **Tree / Tree count:** Optional agricultural inventory information.
 - **Visit:** Registration or subsequent check-visit information.
 
 The exact database schema and relationships should be documented as they are finalized.
@@ -224,6 +228,20 @@ The target design calls for form definitions to be managed as data rather than h
 
 The initial implementation may use a simpler form-authoring process, such as spreadsheet-based definitions converted into JSON. A visual form builder is a stretch goal and is not required for the core architecture.
 
+The schema format must be chosen before form development begins (section 6). Rules (show-if, required-if, value checks) need a small, safe expression language. The application must never execute free code sent from the server. Published form versions never change the type of an existing question, and removing a question hides it rather than deleting its data.
+
+### 3.5 Campaign package, identifiers and duplicate prevention
+
+**Campaign package.** After a synchronization on a connection, the phone holds what it needs to work offline: published forms, the people and fields already known in the agent's zones, the offline map, and a block of Virunga IDs. Package size is shown before download, and old packages can be removed. The agent sees only the zones of their campaigns.
+
+**Two kinds of identifier.** Every record carries a UUID created on the phone, which is the technical identity used by synchronization. A person additionally receives a Virunga ID, the permanent identifier given to the farmer. The phone creates Virunga IDs offline from a block that the cloud reserves for it at each synchronization. The format, including its check digit, is decided by Virunga, and a placeholder format is used until then. The Virunga ID contains no personal data and is never reused, including after a merge of duplicates.
+
+**Who prepares campaigns and packages.** Creating campaigns, assigning agents and building packages is a traceability-manager function. Until the back-office exists (stretch goal), how these are produced is undecided (section 6).
+
+### 3.6 Localization
+
+Agents work in French, Swahili, and English. All user-facing text is kept outside the code so a new language does not need a developer. The localization mechanism is chosen in issue \#8.
+
 ## 4\. Interfaces and Synchronization
 
 ### 4.1 Mobile-to-backend interface
@@ -251,25 +269,27 @@ Synchronization will use a push/pull approach.
 
 **Push changes**
 
-1. The application identifies records with pending changes.  
-2. It submits records with their UUIDs and version information, including the base version where applicable.  
-3. The backend validates each submitted record.  
-4. The backend processes records and returns an outcome for each one.  
+1. The application identifies records with pending changes.
+2. It submits records with their UUIDs and version information, including the base version where applicable.
+3. The backend validates each submitted record.
+4. The backend processes records and returns an outcome for each one.
 5. The application updates its local synchronization state.
 
 The expected outcomes are:
 
-- **Accepted:** The submitted change was successfully stored.  
-- **Conflict:** The submitted change cannot be safely applied because the server-side record has changed.  
+- **Accepted:** The submitted change was successfully stored.
+- **Conflict:** The submitted change cannot be safely applied because the server-side record has changed.
 - **Rejected:** The submitted change failed validation or authorization.
 
-A failed or unresolved operation must not cause the mobile application to discard its local record.
+A failed or unresolved operation must not cause the mobile application to discard its local record. Data is removed from the phone only after the backend confirms that it has the data.
+
+**Ordering and network use (proposed).** Structured data is sent first because it is light. Photos and other files follow, because they are heavy. A record can arrive even if its photos are still waiting. Synchronization starts automatically on Wi-Fi. On mobile data it starts only when the agent asks, because data costs money. Photos are reduced in size before sending, while identity document photos stay sharp enough to read.
 
 **Pull changes**
 
-1. The application sends its most recent synchronization token.  
-2. The backend identifies changes available since that token.  
-3. The backend returns the changes and an updated token.  
+1. The application sends its most recent synchronization token.
+2. The backend identifies changes available since that token.
+3. The backend returns the changes and an updated token.
 4. The application applies the returned changes locally.
 
 The synchronization token allows the application to continue from its previous successful synchronization point.
@@ -284,6 +304,13 @@ The mobile application must not assume that a request failed simply because it d
 
 Conflicting changes must not be silently overwritten. The system should preserve the local version and provide enough information for the conflict to be resolved.
 
+The following rules are proposed, based on Virunga's target design, and are to be confirmed:
+
+- **Different attributes changed:** both changes are kept.
+- **Same attribute, two different values:** both values are kept and a conflict is opened for a supervisor. The validated value stays in force until a person decides.
+- **Two different boundaries for one field:** both are kept, and a person chooses between them on the map.
+- **"Last write wins" is never used,** because it would erase an agent's work without anyone noticing.
+
 The exact user-facing conflict-resolution workflow remains to be finalized.
 
 ### 4.4 Attachment handling
@@ -292,10 +319,10 @@ Photographs and other attachments will be stored separately from structured data
 
 The intended workflow is:
 
-1. The application requests authorization to upload an attachment.  
-2. The backend provides a temporary upload mechanism.  
-3. The application uploads the file.  
-4. The backend confirms receipt and associates the attachment with its record.  
+1. The application requests authorization to upload an attachment.
+2. The backend provides a temporary upload mechanism.
+3. The application uploads the file.
+4. The backend confirms receipt and associates the attachment with its record.
 5. The application marks the attachment as synchronized only after confirmation.
 
 The upload process should support recovery from interrupted connections. Resumable uploads are a behavior to investigate and validate.
@@ -308,16 +335,23 @@ The application handles personal information and geographic data. Security must 
 
 The planned security approach includes:
 
-- HTTPS for communication between the application and backend.  
-- Local database encryption using SQLite3 Multiple Ciphers.  
-- Secure storage of database encryption keys using `flutter_secure_storage`.  
-- Attachment encryption using the proposed `cryptography` package.  
-- Private backend object storage.  
-- Encryption at rest for backend data and files.  
-- Authenticated API access and role-/zone-scoped authorization.  
+- HTTPS for communication between the application and backend.
+- Local database encryption using SQLite3 Multiple Ciphers.
+- Secure storage of database encryption keys using `flutter_secure_storage`.
+- Attachment encryption using the proposed `cryptography` package.
+- Private backend object storage.
+- Encryption at rest for backend data and files.
+- Authenticated API access and role-/zone-scoped authorization.
 - No secrets or credentials committed to the repository.
 
 The encryption implementation, key lifecycle, authentication provider, and authorization model require further technical decisions and validation.
+
+Device protections proposed by Virunga's target design, not yet decided or implemented:
+
+- The application asks for a PIN, and records are kept only for the agent's zones on the phone.
+- After 30 days without synchronization, the application asks the agent to sign in again (NFR-7).
+- A lost phone is locked as soon as it connects.
+- Photos never go to the phone's gallery.
 
 The application should avoid unintentionally exposing photographs through the device's public photo gallery.
 
@@ -328,6 +362,8 @@ Consent information and signatures should be associated with the relevant record
 ### 5.2 Mobile deployment
 
 The initial delivery target is Android. iOS is outside the current project scope.
+
+Virunga's field phones are rugged Samsung models on Android 15, and the team does not have one. Testing uses an Android emulator, plus a physical Android phone.
 
 The application will be built and distributed as an APK for testing and demonstration, subject to agreement with Virunga.
 
@@ -357,7 +393,17 @@ Infrastructure as code using AWS CDK or Terraform may be used to support reprodu
 
 GitHub Actions will provide automated checks and build validation.
 
-The mobile pipeline should include Flutter analysis, formatting checks, automated tests, and Android builds. Dependency and license checks are also planned.
+The mobile pipeline is in place. The workflows are in `.github/workflows/`, and Flutter 3.47.9 is pinned in `app/pubspec.yaml`. It runs for pull requests into `main`, and pushes to `main`, that change files under `app/` or the CI configuration. A pull request that only changes documentation skips these jobs. The jobs are:
+
+| Job | What it does |
+| :---- | :---- |
+| Format and analyze | `dart format` check and `flutter analyze` |
+| Unit tests | `flutter test` (currently one widget test) |
+| Dependency licenses | Allows only MIT, BSD-2-Clause, BSD-3-Clause, Apache-2.0, ISC and Zlib, including transitive packages |
+| Debug APK | Builds an arm64 debug APK and keeps it as a downloadable artifact for 7 days |
+| Secret scan (separate workflow, runs on every pull request and push to `main`) | Gitleaks over the full git history |
+
+Dependabot opens weekly update pull requests for packages and GitHub Actions. Integration tests, a coverage gate and a pre-commit hook are not set up yet.
 
 The backend pipeline should include corresponding Python checks and tests once backend development begins.
 
@@ -386,21 +432,28 @@ The following decisions remain open and should be resolved through technical inv
 | Expected data and attachment volumes | Informs storage and synchronization design |
 | Supervisor back-office scope | Determines whether and when the stretch goal is implemented |
 
+Resolved:&nbsp;
+
+- Virunga's field phones are rugged Samsung models on Android 15 (reported 2026-10-23), and the team uses its own AWS account.
+- iOS scope: code is to allow for integration of iOS features down the line, but the team is not responsible for the development of an iOS build.
+
 The team should also investigate:
 
-- Whether the proposed geometry library supports all required validation operations.  
-- Whether the proposed encryption approach integrates correctly with Drift and SQLite.  
-- How offline MBTiles packages will be generated and consumed by the mapping implementation.  
-- The battery and performance implications of GPS tracking and polygon geofencing.  
+- Whether `dart_jts` supports all required validation operations (spike, issue \#12).
+- Whether the proposed encryption approach integrates correctly with Drift and SQLite.
+- How offline MBTiles packages will be generated and consumed by the mapping implementation.
+- The battery and performance implications of GPS tracking and polygon geofencing.
 - How synchronization behaves on very weak networks and after interrupted uploads.
 
 Major architectural decisions should be recorded in separate Architecture Decision Records (ADRs), including the rationale and trade-offs.
 
 ## References
 
-- **Field Data Collection App Target Design (To Be), October 8, 2026:** Product workflows, field constraints, functional priorities, and target system behavior.  
-- **Flutter Supported Tech Stack Proposal:** Proposed Flutter-based technology stack.  
-- **Capstone Technical Design Guide:** Architecture documentation expectations.  
+- **Field Data Collection App Target Design (To Be), October 8, 2026:** Product workflows, field constraints, functional priorities, and target system behavior.
+- **Flutter Supported Tech Stack Proposal:** Proposed Flutter-based technology stack.
+- **Capstone Technical Design Guide:** Architecture documentation expectations.
 - **Repository Checkpoints Assignment:** Documentation and deployment-target requirements.
 
 This document is a living architecture reference. It should be updated as implementation details are validated, interfaces are finalized, and architectural decisions are made.
+
+&nbsp;
