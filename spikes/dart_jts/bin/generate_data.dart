@@ -65,9 +65,23 @@ List<Point> square(double side) {
 List<Point> triangle(double side) {
   return [Point(0,0), Point(side/2,side), Point(side,0)];
 }
-// List<Point> circle(double radius) {
-//   return [Point(0,0), Point(radius,0), Point(radius,radius), Point(0,radius), Point(-radius,radius), Point(-radius,0), Point(-radius,-radius), Point(0,-radius), Point(radius,-radius)];
-// }
+List<Point> circle(double radius, int numPoints) {
+  var coords = <Point>[Point(0,0)];
+  // Center is at (radius, 0) so that (0, 0) lies on the circumference
+  double centerX = radius;
+  double centerY = 0;
+
+  for (int i = 0; i < numPoints; i++) {
+    // Start at pi (180 degrees) so the very first point generated is (0, 0)
+    double angle = pi + (i / numPoints) * 2 * pi;
+
+    double x = centerX + radius * cos(angle);
+    double y = centerY + radius * sin(angle);
+
+    coords.add(Point(x, y));
+  }
+  return coords;
+}
 List<Point> lShape(double side){
   return [Point(0,0), Point(0, side), Point(side, side), Point(side, side/2), Point(side/2, side/2), Point(side/2, 0)];
 }
