@@ -1,0 +1,12 @@
+name: vcollect_dart_jts_spike
+description: "A test of the dart_jts topology validation library's capabilities."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.7
+  # Exact version CI installs; pub treats it as a minimum locally
+  flutter: 3.47.9
+dependencies:
+  dart_jts: ^0.3.0+1
