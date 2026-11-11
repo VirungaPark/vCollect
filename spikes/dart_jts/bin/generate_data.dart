@@ -105,6 +105,29 @@ double perimeter(List<Point> points){
   return sum;
 }
 
+// resample a list of points to a new spacing
+List<Point> resample(List<Point> outline, {double spacing = 1.3}) {
+  final out = <Point>[];
+  for (var i = 0; i < outline.length; i++) {
+    final a = outline[i], b = outline[(i + 1) % outline.length];
+    final len = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2));
+    final n = max(1, (len / spacing).round());
+    for (var j = 0; j < n; j++) {
+      final t = j / n;
+      out.add(Point(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t));
+    }
+  }
+  return out;
+}
+// convert a list of points to a list of tuples
+List<(double, double)> convertToList(List<Point> polygon){
+  List<(double, double)> coords = [];
+  for (var i = 0; i < polygon.length; i++) {
+    coords.add((polygon[i].x, polygon[i].y));
+  }
+  return coords;
+}
+
 void main(){
   print(area(lShape(5)));
   print(area(triangle(5)));
