@@ -3,7 +3,7 @@ name: Spike
 about: A time-boxed investigation of a library or software to decide whether it fits
   our needs
 title: "[SPIKE]"
-labels: ''
+labels: 'spike'
 assignees: ''
 type: Task
 
