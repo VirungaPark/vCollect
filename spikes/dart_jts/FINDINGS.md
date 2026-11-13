@@ -1,6 +1,35 @@
-Does dart_jts conflict with current app's dependencies?
+# Findings from dart_jts Spike
+This document's purpose is to take note of any findings from building the dart_jts library tests as well as the results of the spike which support the overall decision to use the library for the vCollect project.
+
+**The spike is still under development as of 11/12/26.
+The TODOs are as follows listed in priority order:**
+- write tests for benchmarks (1k, 10k, 100k coordinates)
+- write tests for dart_jts methods (intersection, buffer, etc)
+- render tests using flutter (this would allow testing on emulator)
+- clean up code + add comments
+- fix base circle logic
+- add more shapes
+
+### Notes
+- An invalid polygon can become valid using the buffer(0) method from the dart_jts library. This does not guarantee that the original shape is preserved as seen with the bow tie shape test.
+
+## How to Run Spike
+```
+flutter pub get
+cd spikes/dart_jts/bin
+dart run generate_data.dart
+```
+
+## Tests & Results
+### Area & Perimeter Accuracy
+### Dart_jts Methods
+### Benchmarks
+1k, 10k, 100k coordinates
+
+
+### Does dart_jts conflict with current app's dependencies?
 in vCollect/app/ ran `flutter pub get dart_jts --dry-run` and the
-results are below:
+results are below, there were no conflicts with the current dependencies. The results only show that some dependencies are locked to specific versions:
 ```
 alex@10-248-26-245 app % flutter pub add dart_jts --dry-run
 Resolving dependencies...
