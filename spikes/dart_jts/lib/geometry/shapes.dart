@@ -21,7 +21,12 @@ List<Point> bowTie(double side) {
  return [Point(0,0), Point(0, side), Point(side/2, side/2), Point(side, 0), Point(side, side)];
 }
 
-// fix: adds a random point near x=0
+List<Point> figureEight(double side) {
+  return [Point(0,0)]; // placeholder
+}
+
+// fix: adds a random points outside of radius
+// suggestion use .buffer(0) to fix
 List<Point> circle(double radius, int numPoints) {
   var coords = <Point>[Point(0,0)];
   // Center is at (radius, 0) so that (0, 0) lies on the circumference

@@ -10,7 +10,7 @@ void writePointsCsv(String path, List<Point> pts, {double hz = 1.0}) {
     sb.writeln('${i / hz},${p.x},${p.y},$acc');
   }
   final file = File(path);
-  file.parent.createSync(recursive: true); // creates fixtures/ if missing
+  file.parent.createSync(recursive: true);
   file.writeAsStringSync(sb.toString());
 }
 
