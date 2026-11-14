@@ -107,6 +107,13 @@ void main(){
         Point(25, 75),
         Point(25, 25),
       ]));
+      final unnestedSquare = convertToPolygon(convertPointsToCoordinates([
+        Point(0, 0),
+        Point(200, 0),
+        Point(200, 200),
+        Point(0, 200),
+        Point(0, 0),
+      ]));
       expect(baseSquare.contains(nestedSquare), isTrue);
       expect(baseSquare.intersects(nestedSquare), isTrue);
     });
