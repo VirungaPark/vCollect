@@ -3,17 +3,19 @@ This document's purpose is to take note of any findings from building the dart_j
 
 **The spike is still under development as of 11/12/26.
 The TODOs are as follows listed in priority order:**
-- write tests for benchmarks (1k, 10k, 100k coordinates)
+- write tests for benchmarks (1k, 10k, 100k coordinates) [out of scope]
 - write tests for dart_jts methods (intersection, buffer, etc)
-- render tests using flutter (this would allow testing on emulator)
+- render tests using flutter (this would allow testing on emulator) [out of scope]
 - clean up code + add comments
-- fix base circle logic
-- add more shapes
+- fix base circle logic [use .buffer(0)]
+- add more shapes [figure eight, etc]
 
 ### Notes
 - An invalid polygon can become valid using the buffer(0) method from the dart_jts library. This does not guarantee that the original shape is preserved as seen with the bow tie shape test.
+- Dart_jts has not been touched since 2023, the dts library is more recent but younger. Recommended approach is a wrapper of dart_jts so that switching libraries in the future is simpler. 
 
-## How to Run Spike
+## How to Run Spike (update this once tests are written and files are cleaned up)
+open a terminal from dart_jts root directory
 ```
 flutter pub get
 cd spikes/dart_jts/bin
