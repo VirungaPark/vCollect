@@ -1,4 +1,4 @@
-import 'package:vcollect_dart_jts_spike/io/convert.dart';
+import 'package:vcollect_dart_jts_spike/geometry/convert.dart';
 import 'package:test/test.dart';
 import 'package:vcollect_dart_jts_spike/geometry/shapes.dart';
 import 'package:vcollect_dart_jts_spike/geometry/point.dart';

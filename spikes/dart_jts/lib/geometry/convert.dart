@@ -3,18 +3,6 @@ import 'dart:convert';
 import 'package:vcollect_dart_jts_spike/geometry/point.dart';
 import 'package:dart_jts/dart_jts.dart' as jts;
 
-List<jts.Coordinate> readCsv(String path){
-  final lines = File(path).readAsLinesSync().skip(1); // skip the header line
-  final coords = <jts.Coordinate>[];
-  for(final line in lines){
-    if (line.trim().isNotEmpty){
-      final f = line.split(',');
-      coords.add(jts.Coordinate(double.parse(f[1]), double.parse(f[2])));
-    }
-  }
-  return coords;
-}
-
 List<jts.Coordinate> convertPointsToCoordinates(List<Point> points){
   final coords = <jts.Coordinate>[];
   for(var i = 0; i < points.length; i++){
@@ -22,7 +10,6 @@ List<jts.Coordinate> convertPointsToCoordinates(List<Point> points){
   }
   return coords;
 }
-
 // Convert a list of coordinates into a LinearRing polygon.
 // A LinearRing enforces closed boundaries, 0 or at least 4 points.
 jts.Polygon convertToPolygon(List<jts.Coordinate> coords){
@@ -35,7 +22,7 @@ jts.Polygon convertToPolygon(List<jts.Coordinate> coords){
   return gf.createPolygon(gf.createLinearRing(ring), null);
 }
 
-List<(double, double)> convertToList(List<Point> polygon){
+List<(double, double)> convertPointsToList(List<Point> polygon){
   List<(double, double)> coords = [];
   for (var i = 0; i < polygon.length; i++) {
     coords.add((polygon[i].x, polygon[i].y));
