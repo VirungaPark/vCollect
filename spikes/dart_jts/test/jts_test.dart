@@ -131,10 +131,11 @@ void main(){
       final identicalSquare = convertToPolygon(convertPointsToCoordinates(square(100)));
       expect(baseSquare.equals(identicalSquare), isTrue);
     });
-    // ==== Test is having a type error ====
-    // test('returns central point of polygon', () {
-    //   final centralCoordinate = jts.Coordinate(50, 50);
-    //   expect(baseSquare.getCentroid(), equals(centralCoordinate), reason: 'expected $centralCoordinate');
-    // });
+    test('returns central point of polygon', () {
+      final centralCoordinate = jts.Coordinate(50, 50);
+      final simpleTriangle = isoscelesTriangle(10);
+      final triangle = convertToPolygon(convertPointsToCoordinates(simpleTriangle));
+      expect(baseSquare.getCentroid().getCoordinate(), equals(centralCoordinate), reason: 'expected $centralCoordinate');
+    });
   });
 }
