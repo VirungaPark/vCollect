@@ -10,14 +10,14 @@ import 'package:dart_jts/dart_jts.dart' as jts;
 import 'package:vector_math/vector_math_64.dart';
 
 void main(){
-  group('JTS Polygon Validity', () {
-    test('validates clean polygons', (){
-      final shapes = {
-        'square': square(100),
-        'triangle': equilateralTriangle(100),
-        'lShape': lShape(100),
-      };
-      shapes.forEach((name, points) {
+  group('JTS Polygon Validity ->', () {
+    final shapes = {
+      'square': square(100),
+      'triangle': equilateralTriangle(100),
+      'lShape': lShape(100),
+    };
+    shapes.forEach((name, points) {
+        test('validates clean $name', (){
         final polygon = convertToPolygon(convertPointsToCoordinates(points));
         expect(polygon.isValid(), isTrue, reason: '$name should be valid');
       });
