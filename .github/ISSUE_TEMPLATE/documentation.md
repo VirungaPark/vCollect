@@ -1,9 +1,10 @@
 ---
-name: Documentation  
-about: A diagram, spec, or guide that is the deliverable itself  
-title: "[Docs]"  
-labels: documentation  
-assignees: ""
+name: Documentation
+about: A diagram, spec, or guide that is the deliverable itself
+title: "[DOCS]"
+labels: documentation
+assignees: ''
+
 ---
 
 ## Description

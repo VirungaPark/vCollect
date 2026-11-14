@@ -1,9 +1,10 @@
 ---
-name: Feature  
-about: Suggest a Feature  
-title: "[FEATURE]"  
-labels: ''  
+name: Feature
+about: Suggest a Feature
+title: "[FEATURE]"
+labels: ''
 assignees: ''
+
 ---
 
 ## Description

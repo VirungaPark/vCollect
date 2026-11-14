@@ -1,9 +1,10 @@
 ---
-name: Bug  
-about: Something is broken or not working as designed  
-title: "[Bug]"  
-labels: bug  
-assignees: ""
+name: Bug
+about: Something is broken or not working as designed
+title: "[BUG]"
+labels: bug
+assignees: ''
+
 ---
 
 ## Description
