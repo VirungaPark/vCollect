@@ -34,3 +34,18 @@ jts.Polygon convertToPolygon(List<jts.Coordinate> coords){
   }
   return gf.createPolygon(gf.createLinearRing(ring), null);
 }
+
+List<(double, double)> convertToList(List<Point> polygon){
+  List<(double, double)> coords = [];
+  for (var i = 0; i < polygon.length; i++) {
+    coords.add((polygon[i].x, polygon[i].y));
+  }
+  return coords;
+}
+List<(double, double)> convertCoordinatesToList(List<jts.Coordinate> polygon){
+  List<(double, double)> coords = [];
+  for (var i = 0; i < polygon.length; i++) {
+    coords.add((polygon[i].x, polygon[i].y));
+  }
+  return coords;
+}
