@@ -1,6 +1,18 @@
 # Findings from dart_jts Spike
-This document's purpose is to take note of any findings from building the dart_jts library tests as well as the results of the spike which support the overall decision to use the library for the vCollect project.
+This document's purpose is to take note of any findings from building the 
+dart_jts library tests as well as the results of the spike which support 
+the overall decision to use the library for the vCollect project.
 
+
+## Recommendation: (may change if we add tests for dts)
+Move forward with the dart_jts library but build a wrapper around it.
+While the library is a bit more mature than the dart dts library,
+maintenance and updates appear to have stopped since 2023. While
+the library serves our purposes today, the Virunga team may want to 
+switch to a different library (dts) in the future. A wrapper 
+would make this simple without rewriting the whole app.
+
+## temp (delete after spike is complete)
 **The spike is still under development as of 11/12/26.
 The TODOs are as follows listed in priority order:**
 - write tests for benchmarks (1k, 10k, 100k coordinates) [out of scope]
@@ -15,23 +27,18 @@ The TODOs are as follows listed in priority order:**
 - Dart_jts has not been touched since 2023, the dts library is more recent but younger. Recommended approach is a wrapper of dart_jts so that switching libraries in the future is simpler. 
 
 ## How to Run Spike (update this once tests are written and files are cleaned up)
-open a terminal from dart_jts root directory
+open a terminal in vCollect/spikes/dart_jts/
 ```
 flutter pub get
-cd spikes/dart_jts/bin
-dart run generate_data.dart
+dart test
 ```
 
 ## Tests & Results
-### Area & Perimeter Accuracy
-### Dart_jts Methods
-### Benchmarks
-1k, 10k, 100k coordinates
-
 
 ### Does dart_jts conflict with current app's dependencies?
 in vCollect/app/ ran `flutter pub get dart_jts --dry-run` and the
-results are below, there were no conflicts with the current dependencies. The results only show that some dependencies are locked to specific versions:
+results are below, there were no conflicts with the current dependencies. 
+The answer is no. The results only show that some dependencies are locked to specific versions:
 ```
 alex@10-248-26-245 app % flutter pub add dart_jts --dry-run
 Resolving dependencies...
