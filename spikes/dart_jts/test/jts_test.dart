@@ -22,13 +22,13 @@ void main(){
         expect(polygon.isValid(), isTrue, reason: '$name should be valid');
       });
     });
-    test('identifies self-intersection polygon as invalid', (){
+    test('identifies self-intersecting polygon as invalid', (){
       final bowtiePoly = convertToPolygon(convertPointsToCoordinates(bowTie(100)));
       expect(bowtiePoly.isValid(), isFalse, reason: 'bowtie self-intersects, should be invalid');
     });
   });
 
-  group('JTS Area & Perimeter Accuracy', () {
+  group('JTS Area & Perimeter Accuracy ->', () {
     final shapeSideLength = Random(42).nextDouble() * 100;
     final shapes = <String, List<Point>>{
       'square': square(shapeSideLength),
@@ -55,7 +55,7 @@ void main(){
     });
   });
 
-  group('JTS Spatial Relationships', () {
+  group('JTS Spatial Relationships ->', () {
     late jts.Polygon baseSquare;
 
     setUp(() {
