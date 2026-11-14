@@ -116,6 +116,8 @@ void main(){
       ]));
       expect(baseSquare.contains(nestedSquare), isTrue);
       expect(baseSquare.intersects(nestedSquare), isTrue);
+      expect(baseSquare.contains(unnestedSquare), isFalse, reason: 'polygons not inside another polygon are not contained');
+      expect(baseSquare.intersects(unnestedSquare), isTrue, reason: 'a polygon intersecting another does not mean it is contained');
     });
     test('identical polygons are equal', () {
       final identicalSquare = convertToPolygon(convertPointsToCoordinates(square(100)));
