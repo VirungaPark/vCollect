@@ -119,6 +119,14 @@ void main(){
       expect(baseSquare.contains(unnestedSquare), isFalse, reason: 'polygons not inside another polygon are not contained');
       expect(baseSquare.intersects(unnestedSquare), isTrue, reason: 'a polygon intersecting another does not mean it is contained');
     });
+    test('points inside a polygon are contained and points outside are not', (){
+      final gf = jts.GeometryFactory.defaultPrecision();
+      final insidePoint = gf.createPoint(jts.Coordinate(50, 50));
+      final outsidePoint = gf.createPoint(jts.Coordinate(200,200));
+      expect(baseSquare.contains(insidePoint), isTrue);
+      expect(baseSquare.contains(outsidePoint), isFalse);
+    });
+
     test('identical polygons are equal', () {
       final identicalSquare = convertToPolygon(convertPointsToCoordinates(square(100)));
       expect(baseSquare.equals(identicalSquare), isTrue);
