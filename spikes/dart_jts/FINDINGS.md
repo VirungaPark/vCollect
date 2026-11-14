@@ -15,8 +15,16 @@ would make this simple without rewriting the whole app.
 ## temp (delete after spike is complete)
 **The spike is still under development as of 11/12/26.
 The TODOs are as follows listed in priority order:**
-- write tests for benchmarks (1k, 10k, 100k coordinates) [out of scope]
-- write tests for dart_jts methods (intersection, buffer, etc)
+- Write tests for benchmarks (1k, 10k, 100k coordinates) [out of scope]
+- Write tests for dart_jts functions (intersection, buffer, etc):
+  - ~~polygon intersection check~~
+    - see if you can find the exact points intersecting using error method (this may require custom logic)
+  - ~~polygon contains check~~
+  - ~~polygon validity check~~
+- Write tests for dts library functions (intersection, buffer, etc): [defer to future spike]
+  - polygon intersection check
+  - polygon contains check (nested polygon, points)
+  - polygon validity check
 - render tests using flutter (this would allow testing on emulator) [out of scope]
 - clean up code + add comments
 - fix base circle logic [use .buffer(0)]
@@ -30,7 +38,7 @@ The TODOs are as follows listed in priority order:**
 open a terminal in vCollect/spikes/dart_jts/
 ```
 flutter pub get
-dart test
+dart test -r expanded
 ```
 
 ## Tests & Results
