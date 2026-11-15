@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:vcollect/features/registration/registration_step.dart';
 import 'package:vcollect/strings.dart';
 
 import 'helpers/accessibility.dart';
@@ -29,6 +30,22 @@ void main() {
       await tester.pumpAndSettle();
 
       await expectMeetsTapTargetGuidelines(tester);
+    });
+
+    group('registration steps', () {
+      for (final step in RegistrationStep.values) {
+        testWidgets(step.title, (tester) async {
+          await pumpVCollectApp(tester);
+          await tester.tap(find.text(AppStrings.newFarmer));
+          await tester.pumpAndSettle();
+          for (var i = 0; i < step.index; i++) {
+            await tester.tap(find.text(AppStrings.next));
+            await tester.pumpAndSettle();
+          }
+
+          await expectMeetsTapTargetGuidelines(tester);
+        });
+      }
     });
 
     testWidgets('Farmer file', (tester) async {

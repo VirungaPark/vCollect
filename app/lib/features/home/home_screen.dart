@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../strings.dart';
 import '../../widgets/placeholder_body.dart';
+import '../registration/find_farmer_screen.dart';
 import '../settings/settings_screen.dart';
 
 /// Home tab: the agent's starting point.
@@ -27,9 +28,17 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: const PlaceholderBody(
+      body: PlaceholderBody(
         title: AppStrings.homeTitle,
         description: AppStrings.homeDescription,
+        action: FilledButton.icon(
+          icon: const Icon(Icons.person_add),
+          label: const Text(AppStrings.newFarmer),
+          style: FilledButton.styleFrom(minimumSize: const Size(0, 56)),
+          onPressed: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(builder: (_) => const FindFarmerScreen()),
+          ),
+        ),
       ),
     );
   }
