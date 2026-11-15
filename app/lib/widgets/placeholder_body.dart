@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Blank-screen content for the skeleton UI: a title and a short description
-/// of what the screen will hold.
+/// of what the screen will hold, plus an optional [action] (such as a button
+/// that leads to the next screen).
 ///
 /// Replace it with the real screen content when the screen is built.
 class PlaceholderBody extends StatelessWidget {
@@ -9,16 +10,19 @@ class PlaceholderBody extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
+    this.action,
   });
 
   final String title;
   final String description;
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    final action = this.action;
     return Center(
-      child: Padding(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -34,6 +38,7 @@ class PlaceholderBody extends StatelessWidget {
               style: textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
+            if (action != null) ...[const SizedBox(height: 24), action],
           ],
         ),
       ),
