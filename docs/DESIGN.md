@@ -398,7 +398,7 @@ The mobile pipeline is in place. The workflows are in `.github/workflows/`, and 
 | Job | What it does |
 | :---- | :---- |
 | Format and analyze | `dart format` check and `flutter analyze` |
-| Unit tests | `flutter test` (currently one widget test) |
+| Unit tests | `flutter test` (widget tests for navigation, the registration flow and the tap-target guideline on every screen) |
 | Dependency licenses | Allows only MIT, BSD-2-Clause, BSD-3-Clause, Apache-2.0, ISC and Zlib, including transitive packages |
 | Debug APK | Builds an arm64 debug APK and keeps it as a downloadable artifact for 7 days |
 | Secret scan (separate workflow, runs on every pull request and push to `main`) | Gitleaks over the full git history |
