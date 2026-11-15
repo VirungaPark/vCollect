@@ -19,6 +19,9 @@ abstract final class AppStrings {
   static const mapDescription = 'Offline map of fields and boundaries.';
 
   static const sendToOfficeTitle = 'Send to office';
+
+  /// Short bottom-nav label, so it stays on one line at large text sizes.
+  static const sendTabLabel = 'Send';
   static const sendToOfficeDescription = 'Files ready to send and sync status.';
 
   // Screens opened from a tab.

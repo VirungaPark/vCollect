@@ -55,7 +55,7 @@ class _AppShellState extends State<AppShell> {
           NavigationDestination(
             icon: Icon(Icons.cloud_upload_outlined),
             selectedIcon: Icon(Icons.cloud_upload),
-            label: AppStrings.sendToOfficeTitle,
+            label: AppStrings.sendTabLabel,
           ),
         ],
       ),

@@ -13,7 +13,7 @@ void main() {
         AppStrings.homeTitle,
         AppStrings.searchTitle,
         AppStrings.mapTitle,
-        AppStrings.sendToOfficeTitle,
+        AppStrings.sendTabLabel,
       ]) {
         testWidgets(tab, (tester) async {
           await pumpVCollectApp(tester);

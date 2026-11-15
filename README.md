@@ -158,7 +158,7 @@ Every major screen exists as a blank placeholder (a title and a one-line descrip
 | Search | Bottom nav | `features/search/search_screen.dart` |
 | Farmer file | Search, then *Open a farmer file* | `features/search/farmer_file_screen.dart` |
 | Map | Bottom nav | `features/map/map_screen.dart` |
-| Send to office | Bottom nav | `features/sync/send_to_office_screen.dart` |
+| Send to office | Bottom nav (*Send*) | `features/sync/send_to_office_screen.dart` |
 | Settings (holds Language) | Gear at the top of Home | `features/settings/settings_screen.dart` |
 | Registration flow: Find the farmer, ID card, Field walk, Summary & signature | *New farmer* on Home | `features/registration/` |
 
