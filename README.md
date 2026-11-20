@@ -136,12 +136,33 @@ The repository's structure will evolve as development progresses. The main areas
 | :---- | :---- |
 | app/ | Flutter application (Android) |
 | app/lib/ | Application source code |
+| app/lib/features/ | One folder per screen or flow (see Screens below) |
+| app/lib/navigation/ | App shell with the bottom navigation bar |
+| app/lib/widgets/ | Widgets shared between screens |
+| app/lib/strings.dart | Every user-facing string, kept in one file until localization is set up |
 | app/test/ | Automated tests |
+| app/test/helpers/ | Shared test setup and the tap-target accessibility check |
 | docs/ | Project documentation and technical design |
 | .github/workflows/ | CI workflows |
 | .github/actions/ | Shared CI setup steps |
 | .github/ISSUE\_TEMPLATE/ | Bug, feature, and documentation issue templates |
 | .run/ | Shared Android Studio run configuration |
+
+### Screens
+
+Every major screen exists as a blank placeholder (a title and a one-line description) that you can reach through the app's navigation. To build a screen, replace the `PlaceholderBody` in its file and add tests next to the existing ones in `app/test/`.
+
+| Screen | How to reach it | File |
+| :---- | :---- | :---- |
+| Home | Bottom nav | `features/home/home_screen.dart` |
+| Search | Bottom nav | `features/search/search_screen.dart` |
+| Farmer file | Search, then *Open a farmer file* | `features/search/farmer_file_screen.dart` |
+| Map | Bottom nav | `features/map/map_screen.dart` |
+| Send to office | Bottom nav (*Send*) | `features/sync/send_to_office_screen.dart` |
+| Settings (holds Language) | Gear at the top of Home | `features/settings/settings_screen.dart` |
+| Registration flow: Find the farmer, ID card, Field walk, Summary & signature | *New farmer* on Home | `features/registration/` |
+
+The registration steps open full screen without the bottom nav. Their order and the step indicator (step names in tooltips) are defined in `features/registration/registration_step.dart`.
 
 Data and Security
 
