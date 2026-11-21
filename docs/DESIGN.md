@@ -242,6 +242,10 @@ The schema format must be chosen before form development begins (section 6). Rul
 
 Agents work in French, Swahili, and English. All user-facing text is kept outside the code so a new language does not need a developer. The localization mechanism is chosen in issue \#8.
 
+### 3.7 Visual design
+
+The theme in `app/lib/theme/` follows the Virunga mood board. Dark green is for headings. Forest green marks the one main action on each screen, with white text only when it is bold or large. Orange means "needs a look" and always takes dark text. There is no red. Screen layouts follow App Demo 2. Tests check the contrast of each color pair the theme uses. Issue \#8 extends the theme to the rest of the app.
+
 ## 4\. Interfaces and Synchronization
 
 ### 4.1 Mobile-to-backend interface
@@ -398,7 +402,7 @@ The mobile pipeline is in place. The workflows are in `.github/workflows/`, and 
 | Job | What it does |
 | :---- | :---- |
 | Format and analyze | `dart format` check and `flutter analyze` |
-| Unit tests | `flutter test` (widget tests for navigation, the registration flow and the tap-target guideline on every screen) |
+| Unit tests | `flutter test` (widget tests for navigation, the registration flow, the Map screen with fake GPS and map sources, the tap-target guideline on every screen, and color contrast for the theme) |
 | Dependency licenses | Allows only MIT, BSD-2-Clause, BSD-3-Clause, Apache-2.0, ISC and Zlib, including transitive packages |
 | Debug APK | Builds an arm64 debug APK and keeps it as a downloadable artifact for 7 days |
 | Secret scan (separate workflow, runs on every pull request and push to `main`) | Gitleaks over the full git history |

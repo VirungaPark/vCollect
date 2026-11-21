@@ -24,6 +24,13 @@ void main() {
       }
     });
 
+    testWidgets('Map text contrast', (tester) async {
+      await pumpVCollectApp(tester);
+      await tapNavDestination(tester, AppStrings.mapTitle);
+
+      await expectLater(tester, meetsGuideline(textContrastGuideline));
+    });
+
     testWidgets('Settings', (tester) async {
       await pumpVCollectApp(tester);
       await tester.tap(find.byTooltip(AppStrings.settingsTitle));

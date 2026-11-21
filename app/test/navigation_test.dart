@@ -19,9 +19,10 @@ void main() {
     testWidgets('each destination shows its screen', (tester) async {
       await pumpVCollectApp(tester);
 
+      // Each tab maps to text only that tab shows.
       const tabs = {
         AppStrings.searchTitle: AppStrings.searchDescription,
-        AppStrings.mapTitle: AppStrings.mapDescription,
+        AppStrings.mapTitle: AppStrings.myPosition,
         AppStrings.sendTabLabel: AppStrings.sendToOfficeDescription,
         AppStrings.homeTitle: AppStrings.homeDescription,
       };
