@@ -21,11 +21,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
-      body: const Column(
-        children: [
-          ListTile(
-            leading: Icon(Icons.language),
-            title: Text(AppStrings.settingsLanguage),
+      body: ListView(
+        children: <Widget>[
+          SwitchListTile(
+            title: const Text(AppStrings.settingsLanguage),
+            secondary: const Icon(Icons.language),
+            value: _languageValue,
+            onChanged: (bool value) => setState(() => _languageValue = value),
+          ),
+          SwitchListTile(
+            title: const Text('Enable notifications'),
+            subtitle: const Text('Receive notifications from vCollect'),
+            secondary: const Icon(Icons.notifications),
+            value: _notificationsValue,
+            onChanged: (bool value) => setState(() => _notificationsValue = value),
           ),
           Divider(height: 1),
           Expanded(
