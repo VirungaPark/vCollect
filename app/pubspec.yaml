@@ -12,6 +12,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_map: ^8.3.2
+  flutter_map_mbtiles: ^1.1.0
+  geolocator_android: ^5.2.1
+  geolocator_apple: ^2.4.3
+  geolocator_platform_interface: ^4.4.1
+  latlong2: ^0.10.1
+  path_provider: ^2.1.6
 
 dev_dependencies:
   flutter_test:
@@ -20,3 +27,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    # Synthetic sample data; see the Map screen section of the README.
+    - assets/map/
