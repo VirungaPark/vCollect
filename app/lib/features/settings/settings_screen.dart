@@ -36,13 +36,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
             value: _notificationsValue,
             onChanged: (bool value) => setState(() => _notificationsValue = value),
           ),
-          Divider(height: 1),
-          Expanded(
-            child: PlaceholderBody(
-              title: AppStrings.settingsTitle,
-              description: AppStrings.settingsDescription,
-            ),
-          ),
+          // Divider(height: 1),
+          // Expanded(
+          //   child: PlaceholderBody(
+          //     title: AppStrings.settingsTitle,
+          //     description: AppStrings.settingsDescription,
+          //   ),
+          // ),
         ],
       ),
     );
