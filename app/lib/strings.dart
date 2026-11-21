@@ -16,12 +16,27 @@ abstract final class AppStrings {
   static const searchDescription = 'Find a farmer by card or name, offline.';
 
   static const mapTitle = 'Map';
-  static const mapDescription = 'Offline map of fields and boundaries.';
 
   // Position signal (Target Design §12.1): words, never metres.
   static const gpsSignalGood = 'GPS signal good';
   static const gpsSignalWeak = 'GPS signal weak';
   static const gpsSignalTooWeak = 'GPS signal too weak';
+
+  // Map screen.
+  static const myPosition = 'My position';
+  static const layers = 'Layers';
+  static const goTo = 'Go to';
+  static const zoomIn = 'Zoom in';
+  static const zoomOut = 'Zoom out';
+  static const youAreHere = 'You are here';
+  static const lookingForPosition = 'Looking for your position…';
+  static const notReadyYet = 'This is not ready yet.';
+  static const locationOff = 'Turn on location to see where you are.';
+  static const turnOnLocation = 'Turn on location';
+
+  /// Map label for a field, for example "Field 1 (Cocoa)".
+  static String fieldLabel(String name, String? crop) =>
+      crop == null ? name : '$name ($crop)';
 
   static const sendToOfficeTitle = 'Send to office';
 
