@@ -139,7 +139,9 @@ The repository's structure will evolve as development progresses. The main areas
 | app/lib/features/ | One folder per screen or flow (see Screens below) |
 | app/lib/navigation/ | App shell with the bottom navigation bar |
 | app/lib/widgets/ | Widgets shared between screens |
+| app/lib/theme/ | Colors, spacing and button styles from the Virunga mood board |
 | app/lib/strings.dart | Every user-facing string, kept in one file until localization is set up |
+| app/assets/map/ | Synthetic sample map and fields for the Map screen |
 | app/test/ | Automated tests |
 | app/test/helpers/ | Shared test setup and the tap-target accessibility check |
 | docs/ | Project documentation and technical design |
@@ -147,6 +149,7 @@ The repository's structure will evolve as development progresses. The main areas
 | .github/actions/ | Shared CI setup steps |
 | .github/ISSUE\_TEMPLATE/ | Bug, feature, and documentation issue templates |
 | .run/ | Shared Android Studio run configuration |
+| tool/ | Developer scripts, such as the sample map generator |
 
 ### Screens
 
@@ -157,12 +160,41 @@ Every major screen exists as a blank placeholder (a title and a one-line descrip
 | Home | Bottom nav | `features/home/home_screen.dart` |
 | Search | Bottom nav | `features/search/search_screen.dart` |
 | Farmer file | Search, then *Open a farmer file* | `features/search/farmer_file_screen.dart` |
-| Map | Bottom nav | `features/map/map_screen.dart` |
+| Map (built, see below) | Bottom nav | `features/map/map_screen.dart` |
 | Send to office | Bottom nav (*Send*) | `features/sync/send_to_office_screen.dart` |
 | Settings (holds Language) | Gear at the top of Home | `features/settings/settings_screen.dart` |
 | Registration flow: Find the farmer, ID card, Field walk, Summary & signature | *New farmer* on Home | `features/registration/` |
 
 The registration steps open full screen without the bottom nav. Their order and the step indicator (step names in tooltips) are defined in `features/registration/registration_step.dart`.
+
+### Map screen
+
+The Map tab shows the agent's position and their fields on an offline map (Issue #13). Layers and Go to are placeholders for later issues. The layout follows App Demo 2's field walk screen, with colors and shapes from the Virunga mood board.
+
+| File in `app/lib/features/map/` | Role |
+| :---- | :---- |
+| `map_screen.dart` | The screen: map, location card, zoom buttons and bottom controls |
+| `map_services.dart` | `MapServices`: where positions, the basemap and fields come from. `VCollectApp` provides it, and tests swap in fakes (`test/helpers/fake_map_services.dart`) |
+| `position_source.dart` | Location access and positions from the phone's GPS. An external receiver can implement the same interface later |
+| `basemap_source.dart` | Opens an MBTiles file. If the file can't be opened, the map shows a plain background instead of failing |
+| `data/sample_field.dart` | Reads field outlines from GeoJSON |
+| `map_geometry.dart` | The starting view and where field labels go |
+| `widgets/` | The position marker, zoom buttons and bottom controls |
+
+The location prompt appears the first time the Map tab opens, not at launch, and position updates pause while another tab is open.
+
+**Sample data.** `app/assets/map/sample.mbtiles` and `sample_fields.geojson` are synthetic. They show no real place: plain tiles and two regular shapes around 0°N 0°E. To change the tiles, edit and rerun the generator from the repository root. It needs only Python's standard library and gives the same file on every run:
+
+```sh
+python tool/generate_sample_mbtiles.py
+```
+
+**Swapping the map file.** Any raster MBTiles file (PNG, JPEG or WebP tiles) works:
+
+1. Put the file in `app/assets/map/`.
+2. Point `MbTilesBasemapSource(asset: ...)` at it in `MapServices.real`.
+
+The zoom limits come from the file's `minzoom` and `maxzoom` metadata. Real campaign maps will be downloaded rather than bundled (FR-6), so this asset is for development only. Never commit real field boundaries or coordinates.
 
 Data and Security
 
