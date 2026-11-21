@@ -18,6 +18,11 @@ abstract final class AppStrings {
   static const mapTitle = 'Map';
   static const mapDescription = 'Offline map of fields and boundaries.';
 
+  // Position signal (Target Design §12.1): words, never metres.
+  static const gpsSignalGood = 'GPS signal good';
+  static const gpsSignalWeak = 'GPS signal weak';
+  static const gpsSignalTooWeak = 'GPS signal too weak';
+
   static const sendToOfficeTitle = 'Send to office';
 
   /// Short bottom-nav label, so it stays on one line at large text sizes.
