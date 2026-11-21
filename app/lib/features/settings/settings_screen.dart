@@ -7,8 +7,15 @@ import '../../widgets/placeholder_body.dart';
 ///
 /// To build: language selection and other app settings. The Language row is
 /// a placeholder with no behavior yet.
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _languageValue = false;
+  bool _notificationsValue = false;
 
   @override
   Widget build(BuildContext context) {
