@@ -51,7 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsSection(title: AppStrings.settingsGeneral, children: [
             ListTile(
               title: const Text(AppStrings.settingsLanguage),
-              subtitle: Text('Current: $_currentLanguage'),
+              subtitle: Text(_currentLanguage),
               leading: const Icon(Icons.language),
               trailing: const Icon(Icons.chevron_right),
               onTap: () => _changeCurrentLanguage(_currentLanguage),
@@ -94,7 +94,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               leading: const Icon(Icons.storage),
-              trailing: Text('6 of 10 GB'),
+              trailing: Text('6 of 10 GB'), // placeholder string
             ),
             // TODO: implement this page once local storage is implemented
             ListTile(
