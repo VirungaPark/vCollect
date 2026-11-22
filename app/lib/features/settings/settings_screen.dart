@@ -16,9 +16,13 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  // initial state for settings
+  // TODO: set state from local storage
   bool _notificationsValue = false;
-  final double _progressValue = 0.63;
-  String _currentLanguage = AppStrings.languages[0]; // pull from phone prefs
+  bool _locationValue = false;
+  bool _cellularValue = false;
+  final double _progressValue = 0.6;
+  String _currentLanguage = AppStrings.languages[0];
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +63,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
               value: _notificationsValue,
               onChanged: (bool value) => setState(() => _notificationsValue = value),
             ),
+            SwitchListTile(
+              title: const Text(AppStrings.settingsLocation),
+              subtitle: const Text(AppStrings.settingsLocationDescription),
+              secondary: const Icon(Icons.location_on),
+              value: _locationValue,
+              onChanged:
+                  (bool value) => setState(() => _locationValue = value),
+            ),
+            SwitchListTile(
+              title: const Text(AppStrings.settingsEnableCellular),
+              subtitle: const Text(AppStrings.settingsEnableCellularDescription),
+              secondary: const Icon(Icons.signal_cellular_alt),
+              value: _cellularValue,
+              onChanged:
+                  (bool value) => setState(() => _cellularValue = value),
+            ),
           ]),
+
           // storage settings
           SettingsSection(title: AppStrings.settingsStorage, children: [
             // TODO: implement dynamic storage breakdown
@@ -75,6 +96,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leading: const Icon(Icons.storage),
               trailing: Text('6 of 10 GB'),
             ),
+            // TODO: implement this page once local storage is implemented
             ListTile(
               title: Text(AppStrings.settingsCampaignPackages),
               subtitle: Text(AppStrings.settingsViewCampaignPackages),
@@ -82,6 +104,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               trailing: const Icon(Icons.chevron_right),
             ),
           ]),
+
           // account settings
           SettingsSection(title: AppStrings.settingsAccount, children: [
             ListTile(
@@ -96,6 +119,45 @@ class _SettingsScreenState extends State<SettingsScreen> {
               subtitle: const Text(AppStrings.settingsPasswordDescription),
               leading: const Icon(Icons.lock),
               trailing: const Icon(Icons.edit),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
+            ),
+            ListTile(
+              title: const Text(AppStrings.settingsLogout),
+              subtitle: const Text(AppStrings.settingsLogoutDescription),
+              leading: const Icon(Icons.logout),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
+            ),
+          ]),
+          // misc settings
+          // TODO: implement once files exist
+          SettingsSection(title: AppStrings.settingsMisc, children: [
+            ListTile(
+              title: const Text(AppStrings.settingsAbout),
+              subtitle: const Text(AppStrings.settingsAboutDescription),
+              leading: const Icon(Icons.bookmark),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
+            ),
+            ListTile(
+              title: const Text(AppStrings.settingsTerms),
+              subtitle: const Text(AppStrings.settingsTermsDescription),
+              leading: const Icon(Icons.description),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
+            ),
+            ListTile(
+              title: const Text(AppStrings.settingsLicenses),
+              subtitle: const Text(AppStrings.settingsLicensesDescription),
+              leading: const Icon(Icons.copyright),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
+            ),
+            ListTile(
+              title: const Text(AppStrings.settingsReportBug),
+              subtitle: const Text(AppStrings.settingsReportBugDescription),
+              leading: const Icon(Icons.bug_report),
+              trailing: const Icon(Icons.chevron_right),
               onTap: () => _showMessage(AppStrings.notReadyYet),
             ),
           ])
