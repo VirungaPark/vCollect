@@ -39,26 +39,62 @@ class _SettingsScreenState extends State<SettingsScreen> {
       appBar: AppBar(title: const Text(AppStrings.settingsTitle)),
       body: ListView(
         children: <Widget>[
-          SwitchListTile(
-            title: const Text(AppStrings.settingsLanguage),
-            secondary: const Icon(Icons.language),
-            value: _languageValue,
-            onChanged: (bool value) => setState(() => _languageValue = value),
-          ),
-          SwitchListTile(
-            title: const Text('Enable notifications'),
-            subtitle: const Text('Receive notifications from vCollect'),
-            secondary: const Icon(Icons.notifications),
-            value: _notificationsValue,
-            onChanged: (bool value) => setState(() => _notificationsValue = value),
-          ),
-          // Divider(height: 1),
-          // Expanded(
-          //   child: PlaceholderBody(
-          //     title: AppStrings.settingsTitle,
-          //     description: AppStrings.settingsDescription,
-          //   ),
-          // ),
+          // general settings
+          SettingsSection(title: AppStrings.settingsGeneral, children: [
+            ListTile(
+              title: const Text(AppStrings.settingsLanguage),
+              subtitle: const Text(AppStrings.settingsLanguageDescription),
+              leading: const Icon(Icons.language),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _goToChangeLanguagePage(),
+            ),
+            SwitchListTile(
+              title: const Text(AppStrings.settingsNotifications),
+              subtitle: const Text(AppStrings.settingsNotificationsDescription),
+              secondary: const Icon(Icons.notifications),
+              value: _notificationsValue,
+              onChanged: (bool value) => setState(() => _notificationsValue = value),
+            ),
+          ]),
+          // storage settings
+          SettingsSection(title: AppStrings.settingsStorage, children: [
+            // TODO: implement dynamic storage breakdown
+            ListTile(
+              title: Text(AppStrings.settingsStorageSpace),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: AppSpacing.s8),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(AppRadii.card),
+                  child: LinearProgressIndicator(value: _progressValue),
+                ),
+              ),
+              leading: const Icon(Icons.storage),
+              trailing: Text('6 of 10 GB'),
+            ),
+            ListTile(
+              title: Text(AppStrings.settingsCampaignPackages),
+              subtitle: Text(AppStrings.settingsViewCampaignPackages),
+              leading: const Icon(Icons.map),
+              trailing: const Icon(Icons.chevron_right),
+            ),
+          ]),
+          // account settings
+          SettingsSection(title: AppStrings.settingsAccount, children: [
+            ListTile(
+              title: const Text(AppStrings.settingsEmail),
+              subtitle: const Text(AppStrings.settingsEmailDescription),
+              leading: const Icon(Icons.email),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _goToChangeEmailPage(),
+            ),
+            ListTile(
+              title: const Text(AppStrings.settingsPassword),
+              subtitle: const Text(AppStrings.settingsPasswordDescription),
+              leading: const Icon(Icons.lock),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () => _goToChangePasswordPage(),
+            ),
+          ])
         ],
       ),
     );
