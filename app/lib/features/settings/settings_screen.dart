@@ -23,14 +23,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SnackBar(content: Text(message)),
     );
   }
-  void _goToChangeLanguagePage(){
-    _showMessage(AppStrings.notReadyYet);
-  }
-  void _goToChangePasswordPage(){
-    _showMessage(AppStrings.notReadyYet);
-  }
-  void _goToChangeEmailPage(){
-    _showMessage(AppStrings.notReadyYet);
+  // temp method for limited persistence
+  Future<void> _changeCurrentLanguage(String language) async {
+    final selectedLanguage = await Navigator.of(context).push<String>(
+      MaterialPageRoute<String>(builder: (_) =>
+        LanguagesScreen(currentLanguage: _currentLanguage)
+      ),
+    );
+    if (selectedLanguage != null) {
+      setState(() => _currentLanguage = selectedLanguage);
+    }
   }
 
   @override
