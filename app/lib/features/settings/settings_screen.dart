@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../strings.dart';
-import '../../widgets/placeholder_body.dart';
+import '../../theme/app_theme.dart';
+import 'settings_section.dart';
 
 /// Settings, opened from the gear at the top of Home.
 ///
