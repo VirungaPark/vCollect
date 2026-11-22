@@ -123,6 +123,9 @@ abstract final class AppTheme {
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.pageMargin),
     ),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(
+      color: AppColors.lime,
+    ),
     dividerTheme: const DividerThemeData(
       color: AppColors.line,
       thickness: 1,
