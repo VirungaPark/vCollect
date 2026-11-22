@@ -100,7 +100,7 @@ void main() {
         // Verify return to SettingsScreen with updated language subtitle
         expect(find.byType(SettingsScreen), findsOneWidget);
         expect(
-          find.text('Current: ${AppStrings.languages[1]}'),
+          find.text(AppStrings.languages[1]),
           findsOneWidget,
         );
       },
