@@ -92,5 +92,41 @@ abstract final class AppTheme {
       backgroundColor: AppColors.ink,
       contentTextStyle: TextStyle(color: AppColors.white, fontSize: 16),
     ),
+    textTheme: const TextTheme(
+      titleLarge: TextStyle(
+        color: AppColors.darkGreen,
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+      ),
+      titleMedium: TextStyle(
+        color: AppColors.darkGreen,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
+      titleSmall: TextStyle(
+        color: AppColors.darkGreen,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+    listTileTheme: const ListTileThemeData(
+      iconColor: AppColors.darkGreen,
+      textColor: AppColors.ink,
+      titleTextStyle: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.ink
+      ),
+      subtitleTextStyle: TextStyle(
+        fontSize: 14,
+        color: AppColors.graphite,
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.pageMargin),
+    ),
+    dividerTheme: const DividerThemeData(
+      color: AppColors.line,
+      thickness: 1,
+      space: 1,
+    )
   );
 }
