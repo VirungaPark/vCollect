@@ -44,11 +44,32 @@ abstract final class AppStrings {
   static const sendTabLabel = 'Send';
   static const sendToOfficeDescription = 'Files ready to send and sync status.';
 
-  // Screens opened from a tab.
+  // Settings Screen
   static const settingsTitle = 'Settings';
   static const settingsDescription = 'Language and app settings.';
+  // General section
+  static const settingsGeneral = 'General';
   static const settingsLanguage = 'Language';
+  static const settingsLanguageDescription = 'Change the language';
+  static const settingsNotifications = 'Notifications';
+  static const settingsNotificationsDescription = 'Receive notifications from vCollect';
 
+  // Storage section
+  static const settingsStorage = 'Storage';
+  static const settingsStorageSpace = 'Space remaining';
+  static const settingsClearCache = 'Clear cache';
+  static const settingsClearCacheDescription = 'Delete cached files';
+  static const settingsCampaignPackages = 'Campaign packages';
+  static const settingsViewCampaignPackages = 'View downloaded campaign packages';
+
+  // Account section
+  static const settingsAccount = 'Account';
+  static const settingsPassword = 'Password';
+  static const settingsPasswordDescription = 'Change your password';
+  static const settingsEmail = 'Email';
+  static const settingsEmailDescription = 'Change your email';
+
+  // Screens opened from a tab.
   static const farmerFileTitle = 'Farmer file';
   static const farmerFileDescription = "One farmer's details and fields.";
   static const openFarmerFile = 'Open a farmer file';
