@@ -74,6 +74,9 @@ abstract final class AppStrings {
   static const farmerFileDescription = "One farmer's details and fields.";
   static const openFarmerFile = 'Open a farmer file';
 
+  // Language subscreen
+  static const languages = ['English', 'French', 'Swahili'];
+
   // Registration flow.
   static const newFarmer = 'New farmer';
   static const next = 'Next';
