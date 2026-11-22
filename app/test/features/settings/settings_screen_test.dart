@@ -9,7 +9,8 @@ import '../../helpers/pump_app.dart';
 void main() {
   group('Settings Screen Widget Tests', () {
     testWidgets('renders all settings sections and initial tile states', (
-        tester,) async {
+      tester,
+    ) async {
       await pumpScreen(tester, const SettingsScreen());
       // verify AppBar title
       expect(find.text(AppStrings.settingsTitle), findsOneWidget);
@@ -28,7 +29,10 @@ void main() {
       // verify storage section tiles rendered
       expect(find.text(AppStrings.settingsStorageSpace), findsOneWidget);
       expect(find.text(AppStrings.settingsCampaignPackages), findsOneWidget);
-      expect(find.text(AppStrings.settingsViewCampaignPackages), findsOneWidget);
+      expect(
+        find.text(AppStrings.settingsViewCampaignPackages),
+        findsOneWidget,
+      );
 
       // verify account section tiles rendered
       expect(find.text(AppStrings.settingsEmail), findsOneWidget);
@@ -48,8 +52,8 @@ void main() {
     });
 
     testWidgets('toggling settings switches updates their state', (
-        tester,
-        ) async {
+      tester,
+    ) async {
       await pumpScreen(tester, const SettingsScreen());
 
       final notificationsFinder = find.widgetWithText(
@@ -70,15 +74,12 @@ void main() {
       await tester.tap(notificationsFinder);
       await tester.pump();
 
-      expect(
-        tester.widget<SwitchListTile>(notificationsFinder).value,
-        isFalse,
-      );
+      expect(tester.widget<SwitchListTile>(notificationsFinder).value, isFalse);
     });
 
     testWidgets(
       'tapping language tile opens LanguagesScreen and updates language on return',
-          (tester) async {
+      (tester) async {
         await pumpScreen(tester, const SettingsScreen());
 
         // Tap Language tile to push LanguagesScreen
@@ -99,16 +100,13 @@ void main() {
 
         // Verify return to SettingsScreen with updated language subtitle
         expect(find.byType(SettingsScreen), findsOneWidget);
-        expect(
-          find.text(AppStrings.languages[1]),
-          findsOneWidget,
-        );
+        expect(find.text(AppStrings.languages[1]), findsOneWidget);
       },
     );
 
     testWidgets(
       'tapping placeholder tiles shows a SnackBar with "This is not ready yet."',
-          (tester) async {
+      (tester) async {
         await pumpScreen(tester, const SettingsScreen());
 
         // set finders for each settings tile
@@ -126,9 +124,7 @@ void main() {
       },
     );
 
-    testWidgets('scrolls down to display Misc. section items', (
-        tester,
-        ) async {
+    testWidgets('scrolls down to display Misc. section items', (tester) async {
       await pumpScreen(tester, const SettingsScreen());
 
       final bugFinder = find.text(AppStrings.settingsReportBug);

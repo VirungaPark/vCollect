@@ -115,12 +115,9 @@ abstract final class AppTheme {
       titleTextStyle: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
-        color: AppColors.ink
+        color: AppColors.ink,
       ),
-      subtitleTextStyle: TextStyle(
-        fontSize: 14,
-        color: AppColors.graphite,
-      ),
+      subtitleTextStyle: TextStyle(fontSize: 14, color: AppColors.graphite),
       contentPadding: EdgeInsets.symmetric(horizontal: AppSpacing.pageMargin),
     ),
     progressIndicatorTheme: const ProgressIndicatorThemeData(
@@ -130,6 +127,6 @@ abstract final class AppTheme {
       color: AppColors.line,
       thickness: 1,
       space: 1,
-    )
+    ),
   );
 }

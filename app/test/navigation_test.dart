@@ -84,7 +84,7 @@ void main() {
       await tester.tap(find.byTooltip(AppStrings.settingsTitle));
       await tester.pumpAndSettle();
 
-      expect(find.text(AppStrings.settingsDescription), findsOneWidget);
+      expect(find.text(AppStrings.settingsGeneral), findsOneWidget);
       expect(find.text(AppStrings.settingsLanguage), findsOneWidget);
       expect(find.byType(NavigationBar), findsNothing);
 

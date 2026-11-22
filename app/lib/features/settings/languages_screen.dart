@@ -12,7 +12,8 @@ class LanguagesScreen extends StatefulWidget {
 
 class _LanguagesScreenState extends State<LanguagesScreen> {
   final List<String> _languages = AppStrings.languages;
-  String currentLanguage = AppStrings.languages[0]; // todo: pull from phone prefs
+  String currentLanguage =
+      AppStrings.languages[0]; // todo: pull from phone prefs
   late String _selectedLanguage;
 
   @override
@@ -36,7 +37,6 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(_selectedLanguage),
         ),
-
       ),
       body: ListView.builder(
         itemCount: _languages.length,
@@ -45,7 +45,9 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
           final isSelected = language == _selectedLanguage;
           return ListTile(
             title: Text(_languages[index]),
-            trailing: isSelected ? Icon(Icons.radio_button_checked) : Icon(Icons.radio_button_off),
+            trailing: isSelected
+                ? Icon(Icons.radio_button_checked)
+                : Icon(Icons.radio_button_off),
             onTap: () => _selectLanguage(language),
           );
         },

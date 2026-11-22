@@ -53,11 +53,13 @@ abstract final class AppStrings {
   static const settingsLanguage = 'Language';
   static const settingsLanguageDescription = 'Change the language';
   static const settingsNotifications = 'Enable Notifications';
-  static const settingsNotificationsDescription = 'Receive notifications from vCollect';
+  static const settingsNotificationsDescription =
+      'Receive notifications from vCollect';
   static const settingsLocation = 'Enable Location Tracking';
   static const settingsLocationDescription = 'Turn on location';
   static const settingsEnableCellular = 'Enable cellular';
-  static const settingsEnableCellularDescription = 'Enable cellular data use for campaign data transfer';
+  static const settingsEnableCellularDescription =
+      'Enable cellular data use for campaign data transfer';
 
   // Storage section
   static const settingsStorage = 'Storage';
@@ -65,7 +67,8 @@ abstract final class AppStrings {
   static const settingsClearCache = 'Clear cache';
   static const settingsClearCacheDescription = 'Delete cached files';
   static const settingsCampaignPackages = 'Campaign packages';
-  static const settingsViewCampaignPackages = 'View downloaded campaign packages';
+  static const settingsViewCampaignPackages =
+      'View downloaded campaign packages';
 
   // Account section
   static const settingsAccount = 'Account';
