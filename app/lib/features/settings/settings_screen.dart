@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../strings.dart';
 import '../../theme/app_theme.dart';
+import 'languages_screen.dart';
 import 'settings_section.dart';
 
 /// Settings, opened from the gear at the top of Home.
@@ -17,6 +18,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _notificationsValue = false;
   final double _progressValue = 0.63;
+  String _currentLanguage = AppStrings.languages[0]; // pull from phone prefs
 
   void _showMessage(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -45,10 +47,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsSection(title: AppStrings.settingsGeneral, children: [
             ListTile(
               title: const Text(AppStrings.settingsLanguage),
-              subtitle: const Text(AppStrings.settingsLanguageDescription),
+              subtitle: Text('Current: $_currentLanguage'),
               leading: const Icon(Icons.language),
               trailing: const Icon(Icons.chevron_right),
-              onTap: () => _goToChangeLanguagePage(),
+              onTap: () => _changeCurrentLanguage(_currentLanguage),
             ),
             SwitchListTile(
               title: const Text(AppStrings.settingsNotifications),
@@ -86,15 +88,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
               title: const Text(AppStrings.settingsEmail),
               subtitle: const Text(AppStrings.settingsEmailDescription),
               leading: const Icon(Icons.email),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _goToChangeEmailPage(),
+              trailing: const Icon(Icons.edit),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
             ),
             ListTile(
               title: const Text(AppStrings.settingsPassword),
               subtitle: const Text(AppStrings.settingsPasswordDescription),
               leading: const Icon(Icons.lock),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => _goToChangePasswordPage(),
+              trailing: const Icon(Icons.edit),
+              onTap: () => _showMessage(AppStrings.notReadyYet),
             ),
           ])
         ],
