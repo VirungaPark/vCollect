@@ -15,8 +15,23 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _languageValue = false;
   bool _notificationsValue = false;
+  final double _progressValue = 0.63;
+
+  void _showMessage(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+  void _goToChangeLanguagePage(){
+    _showMessage(AppStrings.notReadyYet);
+  }
+  void _goToChangePasswordPage(){
+    _showMessage(AppStrings.notReadyYet);
+  }
+  void _goToChangeEmailPage(){
+    _showMessage(AppStrings.notReadyYet);
+  }
 
   @override
   Widget build(BuildContext context) {
