@@ -1,16 +1,52 @@
 /// Every user-facing string in the app, kept in one place.
 ///
-/// English only for now. Issue #8 picks the localization mechanism; until
-/// then, keeping the text here makes moving it into translation files a
-/// mechanical change.
+/// English only for now.
+/// TODO(#9): Move these keys into English, French, and Swahili localization
+/// files once issue #9 merges.
 abstract final class AppStrings {
   static const appTitle = 'vCollect';
 
   // Bottom navigation tabs.
   static const homeTitle = 'Home';
-  static const homeDescription =
-      'Start here: pending work as list tiles, quick links, and the New '
-      'farmer button.';
+
+  // Home status placeholders (synthetic data only).
+  // TODO(#10): Replace with signed-in agent and active campaign from session.
+  static const placeholderAgentName = 'Amara N.';
+  static const placeholderCampaignName = 'North Zone 2026';
+  static const statusOnline = 'Online';
+  static const statusOffline = 'Offline';
+  static const statusOnlineMessage =
+      'Connected. Saved files are ready to send to the office.';
+  static const statusOfflineMessage =
+      'Working offline. Your work stays saved on this phone.';
+
+  /// Plain-language count of saved files waiting to be sent to the office.
+  static String filesWaitingToSend(int count) {
+    if (count == 0) {
+      return 'All files sent';
+    }
+    if (count == 1) {
+      return '1 file to send';
+    }
+    return '$count files to send';
+  }
+
+  // Home actions.
+  static const homeActionsHeading = 'Actions';
+  static const homeFindFarmerAction = 'Find farmer';
+  static const homeFindFarmerSubtitle = 'Look up a saved farmer';
+  static const homeFieldWalkSubtitle = 'Walk and mark a field edge';
+  static const homeMapSubtitle = 'View saved fields offline';
+  static const homeSendToOfficeSubtitle = 'Review and send saved files';
+  static const homeSettingsSubtitle = 'Language and app choices';
+
+  // Home pending work placeholders (synthetic data only).
+  static const homePendingHeading = 'Unfinished work';
+  static const homePendingEmpty = 'No unfinished work right now.';
+  static const placeholderPendingFarmerOne = 'Marie T.';
+  static const placeholderPendingStatusOne = 'Field walk not finished';
+  static const placeholderPendingFarmerTwo = 'Kofi M.';
+  static const placeholderPendingStatusTwo = 'Ready to send to office';
 
   static const searchTitle = 'Search';
   static const searchDescription = 'Find a farmer by card or name, offline.';
@@ -54,6 +90,6 @@ abstract final class AppStrings {
   static const summarySignatureDescription =
       'Review the file and have the farmer sign.';
 
-  /// App bar title for a registration step, for example "Step 2 of 4".
+  /// App bar title for a registration step.
   static String stepOf(int step, int total) => 'Step $step of $total';
 }
