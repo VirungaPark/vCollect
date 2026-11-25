@@ -36,6 +36,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(_selectedLanguage),
+          tooltip: AppStrings.toolTipBack,
         ),
       ),
       body: ListView.builder(
