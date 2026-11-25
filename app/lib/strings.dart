@@ -12,6 +12,8 @@ abstract final class AppStrings {
       'Start here: pending work as list tiles, quick links, and the New '
       'farmer button.';
 
+  static const toolTipBack = 'Back';
+
   static const searchTitle = 'Search';
   static const searchDescription = 'Find a farmer by card or name, offline.';
 
