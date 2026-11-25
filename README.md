@@ -196,7 +196,17 @@ python tool/generate_sample_mbtiles.py
 
 The zoom limits come from the file's `minzoom` and `maxzoom` metadata. Real campaign maps will be downloaded rather than bundled (FR-6), so this asset is for development only. Never commit real field boundaries or coordinates.
 
-Data and Security
+### Settings screen
+
+Settings is split into General, Storage, Account and Misc. sections. Language opens a sub-screen (English, French, Swahili). Switch and language values are held in widget state only and are not persisted yet, and most other rows show a "not ready yet" snackbar.
+
+| File in `app/lib/features/settings/` | Role |
+| :---- | :---- |
+| `settings_screen.dart` | The screen and its four sections |
+| `settings_section.dart` | Section header, tiles and divider |
+| `languages_screen.dart` | Language picker, returns the choice to Settings |
+
+## Data and Security
 
 Because the application handles potentially sensitive farmer and household information, data protection is an important design consideration.
 
