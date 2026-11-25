@@ -38,6 +38,15 @@ void main() {
 
       await expectMeetsTapTargetGuidelines(tester);
     });
+    testWidgets('Settings language', (tester) async {
+      await pumpVCollectApp(tester);
+      await tester.tap(find.byTooltip(AppStrings.settingsTitle));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(AppStrings.settingsLanguage));
+      await tester.pumpAndSettle();
+
+      await expectMeetsTapTargetGuidelines(tester);
+    });
 
     group('registration steps', () {
       for (final step in RegistrationStep.values) {
